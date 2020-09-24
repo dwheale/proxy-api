@@ -29,9 +29,10 @@ const parsePrint_scImages = (html) => {
   return images
 }
 
-router.get('/', (req, res) => {
-  const address = req.body.address
-  const service = req.body.service
+router.get('/:params', (req, res) => {
+  // const address = req.body.address
+  // const service = req.body.service
+  console.log(req.params)
 
   // check which service is in use and extract the appropriate images
   switch (service) {
@@ -46,6 +47,10 @@ router.get('/', (req, res) => {
           .catch(error => {
             res.status(500).send(error)
           })
+      break
+    }
+    default: {
+      res.status(400).send('No Service or Data specified')
     }
 
   }
