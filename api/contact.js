@@ -22,6 +22,11 @@ router.post('/', (req, res) => {
       subject: 'Contact from davidwheale.com',
       text: body.message,
     }
+    delete body.email;
+    delete body.message;
+    for(const field in body) {
+      msg.text = msg.text.concat(`\n${field}: ${body[field]}`)
+    }
   } else {
     msg = {
       to: query.email,
@@ -29,16 +34,19 @@ router.post('/', (req, res) => {
       subject: 'Contact from davidwheale.com',
       text: query.message,
     }
+    delete query.email;
+    delete query.message;
+    for(const field in query) {
+      msg.text = msg.text.concat(`\n${field}: ${query[field]}`)
+    }
   }
-
-
 
   sgMail.send(msg, (error, result) => {
     if (error) {
       console.log(error);
       res.status(500).send(error.message)
     } else {
-      res.status(202).send(result);
+      res.status(202).send();
     }
   })
 })
