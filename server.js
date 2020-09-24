@@ -14,7 +14,9 @@ app.use((req, res, next) => {
 
 // API
 const images = require('./api/images')
+const contact = require('./api/contact')
 app.use('/api/images', images)
+app.use('/api/contact', contact)
 
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('/', (req, res) => {
