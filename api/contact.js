@@ -17,10 +17,11 @@ router.post('/', (req, res) => {
   let msg = {}
   if(bodySize > 0) {
     msg = {
-      to: body.email,
+      to: 'david@whealetech.com',
       from: 'contactme@davidwheale.com',
       subject: 'Contact from davidwheale.com',
       text: body.message,
+      reply_to: body.email
     }
     delete body.email;
     delete body.message;
@@ -29,10 +30,11 @@ router.post('/', (req, res) => {
     }
   } else {
     msg = {
-      to: query.email,
+      to: 'david@whealetech.com',
       from: 'contactme@davidwheale.com',
       subject: 'Contact from davidwheale.com',
       text: query.message,
+      reply_to: query.email
     }
     delete query.email;
     delete query.message;
@@ -43,10 +45,9 @@ router.post('/', (req, res) => {
 
   sgMail.send(msg, (error, result) => {
     if (error) {
-      console.log(error);
       res.status(500).send(error.message)
     } else {
-      res.status(202).send();
+      res.status(202).send(result);
     }
   })
 })
